@@ -1,1 +1,123 @@
-This is a web page
+
+<!DOCTYPE HTML PUBLIC >
+<html>
+<head>
+	<style type="text/css">
+		body {
+			font-family: Arial;
+			font-size: 12pt
+		}
+		div {
+			border: 0px solid black;
+		}
+		div.outer {
+			border: 1px dotted gray;
+			position: relative;
+		}
+		div.title {
+			padding: 5px;
+			background-color: #004;
+			color: white;
+			font-weight: bold;
+			font-size: 14pt;
+		}
+		div.body {
+			padding: 5px;
+		}
+		
+		div#instructions_outer {
+			width: 1000px;
+			margin-bottom: 10px;
+		}
+		div#code_outer {
+			width: 500px;
+			float: left;
+		}
+		div#output_outer {
+			width: 243px;
+			float: left;
+			margin-left: 5px;
+		}
+		div#expected_outer {
+			width: 243px;
+			float: left;
+			margin-left: 5px;
+		}
+		div#code_body, div#output_body, div#expected_body {
+			height: 400px;
+			font-family: Courier New;
+		}
+		
+		button#run {
+			position: absolute; 
+			bottom: 5px; 
+			right: 5px;
+			font-size: 14pt;
+			font-weight: bold;
+			padding: 3px 15px 3px 15px;
+		}
+		
+		span.error {
+			color: red;
+		}
+	</style>
+	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div id="instructions_outer" class="outer">
+		<div id="instructions_title" class="title">
+			Instructions
+		</div>	
+		<div id="instructions_body" class="body">
+			Here's how you do stuff
+		</div>		
+	</div>
+	
+	<div id="code_outer" class="outer">
+		<div id="code_title" class="title">
+			Code
+		</div>	
+		<div id="code_body" class="body"></div>		
+		<button id="run" onclick="run()">Run!</button>
+	</div>
+	
+	<div id="output_outer" class="outer">
+		<div id="output_title" class="title">
+			Output
+		</div>	
+		<div id="output_body" class="body">
+			Output of your program
+		</div>		
+	</div>
+	
+	<div id="expected_outer" class="outer">
+		<div id="expected_title" class="title">
+			Expected Output
+		</div>	
+		<div id="expected_body" class="body">
+			What you should see
+		</div>		
+	</div>
+	
+	<script>
+		var editor = ace.edit("code_body");
+		editor.session.setMode("ace/mode/javascript");
+		editor.setOptions({fontSize: "12pt"});
+		
+		var former = console.log;
+		console.log = function(msg){
+			former(msg);  //maintains existing logging via the console.
+			document.getElementById('output_body').innerHTML=msg;
+		}
+
+		window.onerror = function(message) {
+			console.log('<span class="error">Parsing error in code; please double-check your code and run again.</span>');
+		}
+		
+		function run() {
+			document.getElementById('output_body').innerHTML='';
+			eval(editor.getValue());
+		}
+	</script>
+</body>
+</html>
