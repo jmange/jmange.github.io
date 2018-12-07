@@ -16,27 +16,41 @@
 				expected_output: 'False Value'
 			},
 			{
-				instructions:'Output the statement “Hello World” five times on separate lines as shown in the example output.',
+				instructions: 'Output the statement “Hello World” five times on separate lines as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World'
 			},
 			{
-				instructions:'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
+				instructions: 'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
 				expected_output:'1 Hello World<br>2 Hello World<br>3 Hello World<br>4 Hello World<br>5 Hello World'
 			},
 			{
-				instructions:'Output the statement “Hello World” five times on separate lines but on the third time change the output to “Goodbye World” as shown in the example output.',
+				instructions: 'Output the statement “Hello World” five times on separate lines but on the third time change the output to “Goodbye World” as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Goodbye World<br>Hello World<br>Hello World'
 			},
 			{
-				instructions:'The function makeBlue() will change the color of the box. Using this information, change the box to the color blue.',
+				instructions: 'The function makeBlue() will change the color of the box. Using this information, change the box to the color blue.',
 				expected_output:'A blue Box'
 			},
+			{
+				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue.',
+				expected_output: 'Colored Box and Ball'
+			},
+			{
+				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue.',
+				expected_output: 'Colored boxes'
+			},
+			{
+				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right).',
+				expected_output: 'Colored boxes'
+			}
 		];
 
 		function loadProblem(num) {
-			problem=problems[num];
-			document.getElementById('instructions_body').innerHTML=problem.instructions;
-			document.getElementById('expected_body').innerHTML=problem.expected_output;
+			if (num > 0 && num < problems.length){
+				problem=problems[num];
+				document.getElementById('instructions_body').innerHTML=problem.instructions;
+				document.getElementById('expected_body').innerHTML=problem.expected_output;
+			}
 		}
 	</script>
 	<style type="text/css">
