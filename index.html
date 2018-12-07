@@ -1,11 +1,18 @@
 <!DOCTYPE HTML PUBLIC >
 <html>
 <head>
+	<meta charset="utf-8">
 	<script>
+		var check_function=function() {return false;}; // global variable to hold function to check on running 
+		var problem_index=-1;
+
 		problems=[
 			{
 				instructions: 'Output the statement “Hello World” as shown in the example output.',
-				expected_output: 'Hello World'
+				expected_output: 'Hello World',
+				check_function: function() {
+					return document.getElementById('output_body').innerHTML==window.problems[problem_index].expected_output;
+				}
 			},
 			{
 				instructions: 'Set a variable to the string “Hello World”; output that variable.',
@@ -46,10 +53,12 @@
 		];
 
 		function loadProblem(num) {
-			if (num > 0 && num < problems.length){
+			if (num >= 0 && num < problems.length){
 				problem=problems[num];
+				problem_index=num;
 				document.getElementById('instructions_body').innerHTML=problem.instructions;
 				document.getElementById('expected_body').innerHTML=problem.expected_output;
+				check_function=problem.check_function;
 			}
 		}
 	</script>
@@ -153,6 +162,7 @@
 	</div>
 	
 	<script>
+		ace.config.set("basePath", "ace/");
 		var editor = ace.edit("code_body");
 		editor.session.setMode("ace/mode/javascript");
 		editor.setOptions({fontSize: "12pt"});
@@ -161,6 +171,8 @@
 		console.log = function(msg){
 			former(msg);  //maintains existing logging via the console.
 			document.getElementById('output_body').innerHTML=msg;
+			if(check_function())
+				alert('You passed!');
 		}
 
 		window.onerror = function(message) {
