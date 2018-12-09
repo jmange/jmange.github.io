@@ -88,7 +88,7 @@
 		}
 		
 		div#instructions_outer {
-			width: 1000px;
+			width: 1060px;
 			margin-bottom: 10px;
 		}
 		div#code_outer {
@@ -109,6 +109,12 @@
 			height: 400px;
 			font-family: monospace;
 		}
+		
+		div#image_holder {
+			float: left;
+			padding: 200px 2px 0 5px;
+		}
+		
 		
 		button#run {
 			position: absolute; 
@@ -152,6 +158,10 @@
 		</div>		
 	</div>
 	
+	<div id="image_holder">
+		<img id="icon" src="images/disconnected.png">
+	</div>
+	
 	<div id="expected_outer" class="outer">
 		<div id="expected_title" class="title">
 			Expected Output
@@ -171,8 +181,16 @@
 		console.log = function(msg){
 			former(msg);  //maintains existing logging via the console.
 			document.getElementById('output_body').innerHTML=msg;
-			if(check_function())
-				alert('You passed!');
+			if(check_function()) {
+				document.getElementById('icon').src='images/connected.png';
+				document.getElementById('output_body').style.backgroundColor='#9f9';
+				document.getElementById('expected_body').style.backgroundColor='#9f9';
+			} else {
+				document.getElementById('icon').src='images/disconnected.png';
+				document.getElementById('output_body').style.backgroundColor='#fff';
+				document.getElementById('expected_body').style.backgroundColor='#fff';
+			}
+				
 		}
 
 		window.onerror = function(message) {
