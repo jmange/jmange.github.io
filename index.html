@@ -5,27 +5,31 @@
 	<meta charset="utf-8">
 	<script>
 		var check_function=function() {return false;}; // global variable to hold function to check on running 
+function checkMatch() {
+	return document.getElementById('output_body').innerHTML.replace('\n','<br>')==window.problems[problem_index].expected_output;
+}
 		var problem_index=-1;
 
 		problems=[
 			{
 				instructions: 'Output the statement “Hello World” as shown in the example output.',
 				expected_output: 'Hello World',
-				check_function: function() {
-					return document.getElementById('output_body').innerHTML==window.problems[problem_index].expected_output;
-				}
+				check_function: checkMatch
 			},
 			{
 				instructions: 'Set a variable to the string “Hello World”; output that variable.',
-				expected_output: 'Hello World'
+				expected_output: 'Hello World',
+				check_function: checkMatch
 			},
 			{
 				instructions: 'Set a variable to false and then print out “True value” if it is true and “False value” if it is false.',
-				expected_output: 'False Value'
+				expected_output: 'False Value',
+				check_function: checkMatch
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines as shown in the example output.',
-				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World'
+				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World',
+				check_function: checkMatch
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
@@ -97,6 +101,7 @@
 		}
 		div.body {
 			padding: 5px;
+			border-radius: 8px 8px 0 0;
 		}
 		
 		div#instructions_outer {
@@ -153,8 +158,10 @@
 	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+	<div class="outer" style="float: left">
 	<nav style="float: left; width: 150px" id="nav_list" class="nav nav-pills flex-column">
 	</nav>
+	</div>
 	<script>
 		// load all the navs
 		for(var i=0; i<problems.length; i++) {
@@ -228,7 +235,10 @@
 		var former = console.log;
 		console.log = function(msg){
 			former(msg);  //maintains existing logging via the console.
-			document.getElementById('output_body').innerHTML=msg;
+			if(document.getElementById('output_body').innerHTML=='')
+				document.getElementById('output_body').innerHTML+=msg;
+			else
+				document.getElementById('output_body').innerHTML+='<br>'+msg;
 			if(check_function()) {
 				document.getElementById('icon').src='images/connected.png';
 				document.getElementById('output_body').style.backgroundColor='#9f9';
@@ -249,6 +259,8 @@
 			document.getElementById('output_body').innerHTML='';
 			eval(editor.getValue());
 		}
+
+		window.addEventListener('keydown', function(event) { if(event.ctrlKey && event.keyCode==13) run(); });
 	</script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
