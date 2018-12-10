@@ -153,86 +153,73 @@
 	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	<div id="instructions_outer" class="outer">
-		<div id="instructions_title" class="title">
-			Instructions
-		</div>	
-		<div id="instructions_body" class="body">
-			Here's how you do stuff!
-		</div>		
-	</div>
-	
-	<div id="code_outer" class="outer">
-		<div id="code_title" class="title">
-			Code
-		</div>	
-		<div id="code_body" class="body"></div>		
-		<button id="run" onclick="run()">Run!</button>
-	</div>
-	
-	<div id="output_outer" class="outer">
-		<div id="output_title" class="title">
-			Output
-		</div>	
-		<div id="output_body" class="body">
-			Output of your program
-		</div>		
-	</div>
-	
-	<div id="image_holder">
-		<img id="icon" src="images/disconnected.png">
-	</div>
-	
-	<div id="expected_outer" class="outer">
-		<div id="expected_title" class="title">
-			Expected Output
-		</div>	
-		<div id="expected_body" class="body">
-			What you should see
-		</div>		
-	</div>
-	
-	<nav id="prob_nav_col" class="nav nav-pills flex-column">
-		<a class="nav-link active" data-toggle="pill" href="javascript:loadProblem(0)" aria-selected="true" >Problem 1</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(1)" aria-selected="false">Problem 2</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(2)" aria-selected="false">Problem 3</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(3)" aria-selected="false">Problem 4</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(4)" aria-selected="false">Problem 5</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(5)" aria-selected="false">Problem 6</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(6)" aria-selected="false">Problem 7</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(7)" aria-selected="false">Problem 8</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(8)" aria-selected="false">Problem 9</a>
-		<a class="nav-link" data-toggle="pill" href="javascript:loadProblem(9)" aria-selected="false">Problem 10</a>
+	<nav style="float: left; width: 150px" id="nav_list" class="nav nav-pills flex-column">
 	</nav>
-
-	<div style="clear: both"></div>
-	
-	<nav id="prob_nav" aria-label="Problem_navigation">
-		<ul class="pagination" id="nav_list">
-		</ul>
-	</nav>
-
 	<script>
 		// load all the navs
-		function createNavItem(text, link) {
+		for(var i=0; i<problems.length; i++) {
 			var ul=document.getElementById('nav_list');
 			
-			var li=document.createElement('li');
-			ul.appendChild(li);
-			li.classList.add('page-item');
-			
 			var a=document.createElement('a');
-			li.appendChild(a);
-			a.classList.add('page-link');
-			a.innerHTML=text;
-			a.href=link;
+			ul.appendChild(a);
+			a.classList.add('nav-link');
+			a.setAttribute('data-toggle', 'pill');
+			a.setAttribute('aria-selected', 'false');
+			a.setAttribute('onclick', 'javascript:loadProblem('+i+')')
+			a.innerHTML='Problem '+(i+1);
+			a.href='#';
 		}
+	</script>
+
+	<div id="body_holder" style="float: left; padding-left: 10px">
+		<div id="instructions_outer" class="outer">
+			<div id="instructions_title" class="title">
+				Instructions
+			</div>	
+			<div id="instructions_body" class="body">
+				Here's how you do stuff!
+			</div>		
+		</div>
 		
-		createNavItem('Previous', 'javascript:previousProblem()');
-		for(var i=0; i<problems.length; i++)
-			createNavItem(i, 'javascript:loadProblem('+i+')');
-		createNavItem('Next', 'javascript:nextProblem()');
+		<div id="code_outer" class="outer">
+			<div id="code_title" class="title">
+				Code
+			</div>	
+			<div id="code_body" class="body"></div>		
+			<button id="run" onclick="run()">Run!</button>
+		</div>
 		
+		<div id="output_outer" class="outer">
+			<div id="output_title" class="title">
+				Output
+			</div>	
+			<div id="output_body" class="body">
+				Output of your program
+			</div>		
+		</div>
+		
+		<div id="image_holder">
+			<img id="icon" src="images/disconnected.png">
+		</div>
+		
+		<div id="expected_outer" class="outer">
+			<div id="expected_title" class="title">
+				Expected Output
+			</div>	
+			<div id="expected_body" class="body">
+				What you should see
+			</div>		
+		</div>
+	</div>
+
+		<div style="clear: both"></div>
+		
+		<nav id="prob_nav" aria-label="Problem_navigation">
+			<ul class="pagination" id="nav_list">
+			</ul>
+		</nav>
+
+	<script>	
 		ace.config.set("basePath", "ace/");
 		var editor = ace.edit("code_body");
 		editor.session.setMode("ace/mode/javascript");
