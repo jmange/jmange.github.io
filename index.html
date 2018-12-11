@@ -49,7 +49,7 @@ function checkMatch() {
 				check_function: checkMatch
 			},
 			{
-				instructions: 'The function <span class="code">makeBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
+				instructions: 'The function <span class="code">makeBoxBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
 				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div></center>',
 				output: '<center><div class="box" id="output_box"></div></center>',
 				output_mode: 'box',
@@ -57,7 +57,10 @@ function checkMatch() {
 			},
 			{
 				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue.',
-				expected_output: 'Colored Box and Ball'
+				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div></center>',
+				output: '<center><div class="box" id="output_box"></div><div class="circle" id="output_circle"></div></center>',
+				output_mode: 'box',
+				check_function: function() {return (document.getElementById('output_box').style.backgroundColor=='#007bff' && document.getElementById('output_circle').style.backgroundColor=='red');}
 			},
 			{
 				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue.',
@@ -70,8 +73,20 @@ function checkMatch() {
 		];
 
 		// functions for the problems
-		function makeBlue() {
+		function makeBoxBlue(){
 			document.getElementById('output_box').style.backgroundColor='#007bff';
+		}
+
+		function makeBoxRed(){
+			document.getElementById('output_box').style.backgroundColor='red';
+		}
+
+		function makeBallBlue(){
+			document.getElementById('output_circle').style.backgroundColor='#007bff';
+		}
+
+		function makeBallRed(){
+			document.getElementById('output_circle').style.backgroundColor='red';
 		}
 
 		function loadProblem(num) {
@@ -81,11 +96,11 @@ function checkMatch() {
 				document.getElementById('instructions_body').innerHTML=problem.instructions;
 				document.getElementById('expected_body').innerHTML=problem.expected_output;
 				outputMode=problem.output_mode;
+				document.getElementById('output_body').innerHTML='';
 				if(problem.output) {
 					console.log('HEY WERE HERE');
 					document.getElementById('output_body').innerHTML=problem.output;
-				}
-				
+				}				
 				
 				check_function=problem.check_function;
 				run();
@@ -98,6 +113,16 @@ function checkMatch() {
 			height: 150px;
 			border: 2px solid black;
 			background-color: white;
+			position: absolute;
+		}
+
+		div.circle {
+			border-radius: 50%;
+			width: 150px;
+			height: 150px;
+			border: 2px solid black;
+			background-color: white;
+			position: absolute;
 		}
 
 		span.code {
