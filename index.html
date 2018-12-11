@@ -9,39 +9,51 @@ function checkMatch() {
 	return document.getElementById('output_body').innerHTML.replace('\n','<br>')==window.problems[problem_index].expected_output;
 }
 		var problem_index=-1;
+		var outputMode='text';
 
 		problems=[
 			{
 				instructions: 'Output the statement “Hello World” as shown in the example output.',
 				expected_output: 'Hello World',
+				output_mode: 'text',
 				check_function: checkMatch
 			},
 			{
 				instructions: 'Set a variable to the string “Hello World”; output that variable.',
 				expected_output: 'Hello World',
+				output_mode: 'text',
 				check_function: checkMatch
 			},
 			{
 				instructions: 'Set a variable to false and then print out “True value” if it is true and “False value” if it is false.',
 				expected_output: 'False Value',
+				output_mode: 'text',
 				check_function: checkMatch
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World',
+				output_mode: 'text',
 				check_function: checkMatch
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
-				expected_output:'1 Hello World<br>2 Hello World<br>3 Hello World<br>4 Hello World<br>5 Hello World'
+				expected_output:'1 Hello World<br>2 Hello World<br>3 Hello World<br>4 Hello World<br>5 Hello World',
+				output_mode: 'text',
+				check_function: checkMatch
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but on the third time change the output to “Goodbye World” as shown in the example output.',
-				expected_output:'Hello World<br>Hello World<br>Goodbye World<br>Hello World<br>Hello World'
+				expected_output:'Hello World<br>Hello World<br>Goodbye World<br>Hello World<br>Hello World',
+				output_mode: 'text',
+				check_function: checkMatch
 			},
 			{
-				instructions: 'The function makeBlue() will change the color of the box. Using this information, change the box to the color blue.',
-				expected_output:'A blue Box'
+				instructions: 'The function <span class="code">makeBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
+				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div></center>',
+				output: '<center><div class="box" id="output_box"></div></center>',
+				output_mode: 'box',
+				check_function: function() {return document.getElementById('output_box').style.backgroundColor=='#007bff';}
 			},
 			{
 				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue.',
@@ -57,27 +69,43 @@ function checkMatch() {
 			}
 		];
 
+		// functions for the problems
+		function makeBlue() {
+			document.getElementById('output_box').style.backgroundColor='#007bff';
+		}
+
 		function loadProblem(num) {
 			if (num >= 0 && num < problems.length){
 				problem=problems[num];
 				problem_index=num;
 				document.getElementById('instructions_body').innerHTML=problem.instructions;
 				document.getElementById('expected_body').innerHTML=problem.expected_output;
+				outputMode=problem.output_mode;
+				if(problem.output) {
+					console.log('HEY WERE HERE');
+					document.getElementById('output_body').innerHTML=problem.output;
+				}
+				
+				
 				check_function=problem.check_function;
+				run();
 			}
-		}
-		
-		function nextProblem() {
-			problem_index=(problem_index+1)%problems.length;
-			loadProblem(problem_index);
-		}
-		
-		function previousProblem() {
-			problem_index=(problem_index-1)%problems.length;
-			loadProblem(problem_index);
 		}
 	</script>
 	<style type="text/css">
+		div.box {
+			width: 150px;
+			height: 150px;
+			border: 2px solid black;
+			background-color: white;
+		}
+
+		span.code {
+			font-family: monospace;
+			background-color: #eee;
+			padding: 2px;
+		}
+
 		body {
 			font-family: Arial;
 			font-size: 12pt;
@@ -235,10 +263,24 @@ function checkMatch() {
 		var former = console.log;
 		console.log = function(msg){
 			former(msg);  //maintains existing logging via the console.
-			if(document.getElementById('output_body').innerHTML=='')
-				document.getElementById('output_body').innerHTML+=msg;
-			else
-				document.getElementById('output_body').innerHTML+='<br>'+msg;
+
+			if(outputMode=='text') {
+				if(document.getElementById('output_body').innerHTML=='')
+					document.getElementById('output_body').innerHTML+=msg;
+				else
+					document.getElementById('output_body').innerHTML+='<br>'+msg;	
+			}	
+		}
+
+		window.onerror = function(message) {
+			console.log('<span class="error">Parsing error in code; please double-check your code and run again.</span>');
+		}
+		
+		function run() {
+			if(outputMode=='text')
+				document.getElementById('output_body').innerHTML='';
+			eval(editor.getValue());
+
 			if(check_function()) {
 				document.getElementById('icon').src='images/connected.png';
 				document.getElementById('output_body').style.backgroundColor='#9f9';
@@ -248,16 +290,6 @@ function checkMatch() {
 				document.getElementById('output_body').style.backgroundColor='#fff';
 				document.getElementById('expected_body').style.backgroundColor='#fff';
 			}
-				
-		}
-
-		window.onerror = function(message) {
-			console.log('<span class="error">Parsing error in code; please double-check your code and run again.</span>');
-		}
-		
-		function run() {
-			document.getElementById('output_body').innerHTML='';
-			eval(editor.getValue());
 		}
 
 		window.addEventListener('keydown', function(event) { if(event.ctrlKey && event.keyCode==13) run(); });
