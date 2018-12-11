@@ -64,13 +64,16 @@ function checkMatch() {
 			},
 			{
 				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue.',
-				expected_output: 'Colored boxes'
+				expected_output: ''
 			},
 			{
 				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right).',
 				expected_output: 'Colored boxes'
 			}
 		];
+
+		problems[8].expected_output=makeBlankGrid(3);
+		problems[9].expected_output=makeBlankGrid(3);
 
 		// functions for the problems
 		function makeBoxBlue(){
@@ -88,6 +91,18 @@ function checkMatch() {
 		function makeBallRed(){
 			document.getElementById('output_circle').style.backgroundColor='red';
 		}
+
+		function makeBlankGrid(size) {
+            var grid='<table id="table_'+size+'" border=1>';
+            for(var r=0; r<size; r++) {
+                grid+="<tr>";
+                for(var c=0; c<size; c++)
+                    grid+='<td id="cell_'+r+'_'+c+'">&nbsp;</td>';
+                grid+="</tr>";
+            }
+            grid+="</table>";
+            return grid;
+        }
 
 		function loadProblem(num) {
 			if (num >= 0 && num < problems.length){
@@ -108,6 +123,12 @@ function checkMatch() {
 		}
 	</script>
 	<style type="text/css">
+		table#table_3 td {
+			width: 40px;
+			height: 40px;
+		}
+	
+		
 		div.box {
 			width: 150px;
 			height: 150px;
