@@ -59,21 +59,28 @@ function checkMatch() {
 				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue.',
 				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div></center>',
 				output: '<center><div class="box" id="output_box"></div><div class="circle" id="output_circle"></div></center>',
-				output_mode: 'box',
+				output_mode: 'box and circle',
 				check_function: function() {return (document.getElementById('output_box').style.backgroundColor=='#007bff' && document.getElementById('output_circle').style.backgroundColor=='red');}
 			},
 			{
 				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue.',
-				expected_output: ''
+				expected_output: '',
+				output: '',
+				output_mode: 'grid'
 			},
 			{
 				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right).',
-				expected_output: 'Colored boxes'
+				expected_output: '',
+				output: '',
+				output_mode: 'grid'
 			}
 		];
 
 		problems[8].expected_output=makeBlankGrid(3);
+		problems[8].output=makeBlankGrid(3);
 		problems[9].expected_output=makeBlankGrid(3);
+		problems[9].output=makeBlankGrid(3);
+
 
 		// functions for the problems
 		function makeBoxBlue(){
@@ -112,10 +119,11 @@ function checkMatch() {
 				document.getElementById('expected_body').innerHTML=problem.expected_output;
 				outputMode=problem.output_mode;
 				document.getElementById('output_body').innerHTML='';
-				if(problem.output) {
-					console.log('HEY WERE HERE');
+				if(problem.output)
 					document.getElementById('output_body').innerHTML=problem.output;
-				}				
+				
+				document.getElementById('output_box').style.backgroundColor='white';
+				document.getElementById('output_circle').style.backgroundColor='white';
 				
 				check_function=problem.check_function;
 				run();
