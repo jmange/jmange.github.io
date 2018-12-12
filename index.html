@@ -4,7 +4,8 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<meta charset="utf-8">
 	<script>
-		var check_function=function() {return false;}; // global variable to hold function to check on running 
+		var check_function=function() {return false;}; // global variable to hold function to check on running
+
 function checkMatch() {
 	return document.getElementById('output_body').innerHTML.replace('\n','<br>')==window.problems[problem_index].expected_output;
 }
@@ -16,63 +17,73 @@ function checkMatch() {
 				instructions: 'Output the statement “Hello World” as shown in the example output.',
 				expected_output: 'Hello World',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'console.log("Hello World");'
 			},
 			{
 				instructions: 'Set a variable to the string “Hello World”; output that variable.',
 				expected_output: 'Hello World',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'var message = "Hello World"; \nconsole.log(message);'
 			},
 			{
 				instructions: 'Set a variable to false and then print out “True value” if it is true and “False value” if it is false.',
 				expected_output: 'False Value',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'var truthValue = false;\n\nif(truthValue)\n	console.log("True value");\nelse\n	console.log("False Value");'
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'for(var i = 0; i < 5; i++)\n	console.log("Hello World");'
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
 				expected_output:'1 Hello World<br>2 Hello World<br>3 Hello World<br>4 Hello World<br>5 Hello World',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'for(var i = 1; i < 6; i++)\n	console.log(i+" Hello World");'
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but on the third time change the output to “Goodbye World” as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Goodbye World<br>Hello World<br>Hello World',
 				output_mode: 'text',
-				check_function: checkMatch
+				check_function: checkMatch,
+				solution: 'for(var i = 0; i < 5; i++)\n if(i == 2)\n	console.log("Goodbye World");\n else\n	console.log("Hello World");'
 			},
 			{
 				instructions: 'The function <span class="code">makeBoxBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
 				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div></center>',
 				output: '<center><div class="box" id="output_box"></div></center>',
 				output_mode: 'box',
-				check_function: function() {return document.getElementById('output_box').style.backgroundColor=='#007bff';}
+				check_function: function() {return document.getElementById('output_box').style.backgroundColor== document.getElementById('expected_box').style.backgroundColor},
+				solution: 'makeBoxBlue();'
 			},
 			{
-				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue.',
+				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue as shown in the example output.',
 				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div></center>',
 				output: '<center><div class="box" id="output_box"></div><div class="circle" id="output_circle"></div></center>',
 				output_mode: 'box and circle',
-				check_function: function() {return (document.getElementById('output_box').style.backgroundColor=='#007bff' && document.getElementById('output_circle').style.backgroundColor=='red');}
+				check_function: function() {return (document.getElementById('output_box').style.backgroundColor==document.getElementById('expected_box').style.backgroundColor && document.getElementById('output_circle').style.backgroundColor==document.getElementById('expected_circle').style.backgroundColor);},
+				solution: 'makeBoxBlue();\nmakeBallRed();'
 			},
 			{
-				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue.',
+				instructions: 'The function makeBlue(r,c) will change the color of the box at the position with row r and column c. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue as shown in the example output.',
 				expected_output: '',
 				output: '',
-				output_mode: 'grid'
+				output_mode: 'grid',
+				solution: 'makeBlue(1,1);'
 			},
 			{
-				instructions: 'The function makeBlue(x,y) will change the color of the box at the position with row x and column y. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right).',
+				instructions: 'The function makeBlue(r,c) will change the color of the box at the position with row r and column c. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right) as shown in the example output.',
 				expected_output: '',
 				output: '',
-				output_mode: 'grid'
+				output_mode: 'grid',
+				solution: 'for(var i = 0; i < 3; i++)\n	makeBlue(i, i);'
 			}
 		];
 
@@ -80,7 +91,6 @@ function checkMatch() {
 		problems[8].output=makeBlankGrid(3);
 		problems[9].expected_output=makeBlankGrid(3);
 		problems[9].output=makeBlankGrid(3);
-
 
 		// functions for the problems
 		function makeBoxBlue(){
@@ -111,8 +121,13 @@ function checkMatch() {
             return grid;
         }
 
+		function makeBlue(r,c){
+			document.getElementById('cell_'+r+'_'+c).style.backgroundColor='#007bff';
+		}
+
 		function loadProblem(num) {
 			if (num >= 0 && num < problems.length){
+				editor.setValue("");
 				problem=problems[num];
 				problem_index=num;
 				document.getElementById('instructions_body').innerHTML=problem.instructions;
@@ -122,13 +137,36 @@ function checkMatch() {
 				if(problem.output)
 					document.getElementById('output_body').innerHTML=problem.output;
 				
-				document.getElementById('output_box').style.backgroundColor='white';
-				document.getElementById('output_circle').style.backgroundColor='white';
+				if(outputMode=='box' || outputMode=='box and circle')
+					document.getElementById('output_box').style.backgroundColor='white';
+				
+				if(outputMode=='box and circle')
+					document.getElementById('output_circle').style.backgroundColor='white';
+
+				/*if(num==8)
+					makeBlue(1,1);
+				
+				if(num==9)
+					for(var i=0; i<3; i++)
+						makeBlue(i,i);*/
 				
 				check_function=problem.check_function;
+				document.getElementById('icon').src='images/disconnected.png';
+				document.getElementById('output_body').style.backgroundColor='#fff';
+				document.getElementById('expected_body').style.backgroundColor='#fff';
 				run();
 			}
 		}
+
+		function displaySolution(){
+			editor.setValue("");
+			var customPosition = {
+				row: 0,
+				column: 0
+			}
+			editor.session.insert(customPosition, problem.solution);
+		}
+
 	</script>
 	<style type="text/css">
 		table#table_3 td {
@@ -214,6 +252,14 @@ function checkMatch() {
 			padding: 200px 2px 0 5px;
 		}
 		
+		button#solution{
+			position: absolute; 
+			bottom: 5px; 
+			right: 100px;
+			font-size: 14pt;
+			font-weight: bold;
+			padding: 3px 15px 3px 15px;
+		}
 		
 		button#run {
 			position: absolute; 
@@ -236,6 +282,7 @@ function checkMatch() {
 		span.error {
 			color: red;
 		}
+
 	</style>
 	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -274,7 +321,8 @@ function checkMatch() {
 			<div id="code_title" class="title">
 				Code
 			</div>	
-			<div id="code_body" class="body"></div>		
+			<div id="code_body" class="body"></div>
+			<button id="solution" onclick="displaySolution()">Solution</button>
 			<button id="run" onclick="run()">Run!</button>
 		</div>
 		
