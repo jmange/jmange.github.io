@@ -64,7 +64,7 @@ function checkMatch() {
 				solution: 'makeBoxBlue();'
 			},
 			{
-				instructions: 'The functions makeBoxBlue(), makeBoxRed(), makeBallBlue(), makeBallRed() will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue as shown in the example output.',
+				instructions: 'The functions <span class="code">makeBoxBlue()</span>, <span class="code">makeBoxRed()</span>, <span class="code">makeBallBlue()</span>, and <span class="code">makeBallRed()</span> will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue as shown in the example output.',
 				expected_output: '<center><div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div></center>',
 				output: '<center><div class="box" id="output_box"></div><div class="circle" id="output_circle"></div></center>',
 				output_mode: 'box and circle',
@@ -72,14 +72,14 @@ function checkMatch() {
 				solution: 'makeBoxBlue();\nmakeBallRed();'
 			},
 			{
-				instructions: 'The function makeBlue(r,c) will change the color of the box at the position with row r and column c. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue as shown in the example output.',
+				instructions: 'The function <span class="code">makeBlue(r,c)</span> will change the color of the box at the position with row r and column c. For example, <span class="code">makeBlue(0,0)</span> will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue as shown in the example output.',
 				expected_output: '',
 				output: '',
 				output_mode: 'grid',
 				solution: 'makeBlue(1,1);'
 			},
 			{
-				instructions: 'The function makeBlue(r,c) will change the color of the box at the position with row r and column c. For example, makeBlue(0,0) will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right) as shown in the example output.',
+				instructions: 'The function <span class="code">makeBlue(r,c)</span> will change the color of the box at the position with row r and column c. For example, <span class="code">makeBlue(0,0)</span> will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right) as shown in the example output.',
 				expected_output: '',
 				output: '',
 				output_mode: 'grid',
