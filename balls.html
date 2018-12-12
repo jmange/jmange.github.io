@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC >
+<html>
+<head>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <style type="text/css">
+        div#pen {
+            border: 1px dotted gray;
+            width: 500px;
+            height: 500px;
+            position: relative;
+        }
+        div.ball {
+            border-radius: 50%;
+            border: 1px solid black;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="pen">
+    </div>
+    <script>
+        balls=[];
+        ballSize=20;
+        function makeBall(x, y, xVel, yVel) {
+            var ball=document.createElement('div');
+            ball.classList.add('ball');
+            ball.style.top=y;
+            ball.style.left=x;
+            ball.style.width=ballSize;
+            ball.style.height=ballSize;
+            ball.x=x;
+            ball.y=y;
+            $('#pen').append(ball);
+
+            ball.dx=xVel;
+            ball.dy=yVel;
+            balls.push(ball);
+            console.log(balls);
+        }
+
+        t=0;
+        function redraw() {
+            for(var i=0; i<balls.length; i++) {
+                balls[i].x+=balls[i].dx;
+                balls[i].y+=balls[i].dy;
+                
+                // check bounce
+                if(balls[i].x+ballSize >= $('#pen').width() || balls[i].x <= 0) {
+                    balls[i].dx*=-1;
+                    balls[i].x+=2*balls[i].dx;
+                }
+                if(balls[i].y+ballSize >= $('#pen').height() || balls[i].y <= 0) {
+                    balls[i].dy*=-1;
+                    balls[i].y+=2*balls[i].dy;
+                }
+                
+                balls[i].style.left=balls[i].x;
+                balls[i].style.top=balls[i].y;
+            }
+            t++;
+        }
+
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        for(var i=0; i<10; i++)
+            makeBall(randInt(0,$('#pen').width()-ballSize), randInt(0,$('#pen').height()-ballSize), randInt(1,5), randInt(1,5));
+        //makeBall(450,100,2,1);
+
+        setInterval(redraw, 20);
+    </script>
+</body>
