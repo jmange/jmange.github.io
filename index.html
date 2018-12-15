@@ -31,39 +31,25 @@ function checkGrid() {
 				solution: 'console.log("Hello World");'
 			},
 			{
-				instructions: 'Set a variable to the string “Hello World”; output that variable.',
-				expected_output: 'Hello World',
-				output_mode: 'text',
-				check_function: checkMatch,
-				solution: 'var message = "Hello World"; \nconsole.log(message);'
-			},
-			{
-				instructions: 'Set a variable to false and then print out “True value” if it is true and “False value” if it is false.',
-				expected_output: 'False Value',
-				output_mode: 'text',
-				check_function: checkMatch,
-				solution: 'var truthValue = false;\n\nif(truthValue)\n	console.log("True value");\nelse\n	console.log("False Value");'
-			},
-			{
 				instructions: 'Output the statement “Hello World” five times on separate lines as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World',
 				output_mode: 'text',
 				check_function: checkMatch,
-				solution: 'for(var i = 0; i < 5; i++)\n	console.log("Hello World");'
+				solution: 'for(var i = 0; i < 5; i++) {\n	console.log("Hello World");\n}'
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but add the number to the beginning of the output statement as shown in the example output.',
 				expected_output:'1 Hello World<br>2 Hello World<br>3 Hello World<br>4 Hello World<br>5 Hello World',
 				output_mode: 'text',
 				check_function: checkMatch,
-				solution: 'for(var i = 1; i < 6; i++)\n	console.log(i+" Hello World");'
+				solution: 'for(var i = 1; i < 6; i++) {\n	console.log(i+" Hello World");\n}'
 			},
 			{
 				instructions: 'Output the statement “Hello World” five times on separate lines but on the third time change the output to “Goodbye World” as shown in the example output.',
 				expected_output:'Hello World<br>Hello World<br>Goodbye World<br>Hello World<br>Hello World',
 				output_mode: 'text',
 				check_function: checkMatch,
-				solution: 'for(var i = 0; i < 5; i++)\n if(i == 2)\n	console.log("Goodbye World");\n else\n	console.log("Hello World");'
+				solution: 'for(var i = 0; i < 5; i++) {\n if(i == 2){\n	console.log("Goodbye World"); \n }\n else {\n	console.log("Hello World"); \n } \n}'
 			},
 			{
 				instructions: 'The function <span class="code">makeBoxBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
@@ -74,7 +60,7 @@ function checkGrid() {
 				solution: 'makeBoxBlue();'
 			},
 			{
-				instructions: 'The functions <span class="code">makeBoxBlue()</span>, <span class="code">makeBoxRed()</span>, <span class="code">makeBallBlue()</span>, and <span class="code">makeBallRed()</span> will change the colors of the box and ball. Using this information, change the box to the color blue, and the ball to the color red as shown in the example output.',
+				instructions: 'The functions <span class="code">makeBoxBlue()</span>, <span class="code">makeBoxRed()</span>, <span class="code">makeBallBlue()</span>, and <span class="code">makeBallRed()</span> will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue as shown in the example output.',
 				expected_output: '<div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div>',
 				output: '<div class="box" id="output_box"></div><div class="circle" id="output_circle"></div>',
 				output_mode: 'box and circle',
@@ -94,15 +80,15 @@ function checkGrid() {
 				expected_output: '',
 				output: '',
 				output_mode: 'grid',
-				solution: 'for(var i = 0; i < 3; i++)\n	makeBlue(i, i);',
+				solution: 'for(var i = 0; i < 3; i++) {\n	makeBlue(i, i); \n}',
 				check_function: checkGrid
 			}
 		];
 
-		problems[8].expected_output=makeBlankGrid(3, 'expected');
-		problems[8].output=makeBlankGrid(3);
-		problems[9].expected_output=makeBlankGrid(3, 'expected');
-		problems[9].output=makeBlankGrid(3);
+		problems[6].expected_output=makeBlankGrid(3, 'expected');
+		problems[6].output=makeBlankGrid(3);
+		problems[7].expected_output=makeBlankGrid(3, 'expected');
+		problems[7].output=makeBlankGrid(3);
 
 		// functions for the problems
 		function makeBoxBlue(){
@@ -159,10 +145,10 @@ function checkGrid() {
 				if(outputMode=='box and circle')
 					document.getElementById('output_circle').style.backgroundColor='white';
 
-				if(num==8)
+				if(num==6)
 					makeBlue(1,1,'expected');
 				
-				if(num==9)
+				if(num==7)
 					for(var i=0; i<3; i++)
 						makeBlue(i,i,'expected');
 				
