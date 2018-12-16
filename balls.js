@@ -6,10 +6,10 @@ function initCanvas() {
 
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1) ) + min; }
 function randColor() {
-	let letters = '0123456789'.split('');
+	let letters = '0123456789AB'.split('');
     let color = '#';
     for (let i = 0; i < 6; i++) {
-        color += letters[Math.round(Math.random() * 10)];
+        color += letters[Math.round(Math.random() * letters.length)];
     }
     return color;
 }
@@ -21,7 +21,8 @@ function randomBall(color) {
 }
 
 function addRandomColorBall() {
-	randomBall(randColor());
+	let c=randColor();
+	randomBall(c);
 }
 
 function addRedBall() {
