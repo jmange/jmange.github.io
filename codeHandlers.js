@@ -95,13 +95,17 @@ function loadProblem(num) {
         document.getElementById('output_body').style.backgroundColor='#fff';
         document.getElementById('expected_body').style.backgroundColor='#fff';
 
-        if(outputMode!='text') {
+        if(outputMode=='text') {
+            document.getElementById('output_body').style.textAlign='left';
+            document.getElementById('expected_body').style.textAlign='left';
+        } else if(outputMode=='balls') {
+            initCanvas();
+            document.getElementById('output_body').style.textAlign='left';
+            document.getElementById('expected_body').style.textAlign='left';
+        } else {
             document.getElementById('output_body').style.textAlign='center';
             document.getElementById('output_body').style.justifyContent='center';
             document.getElementById('expected_body').style.textAlign='center';
-        } else {
-            document.getElementById('output_body').style.textAlign='left';
-            document.getElementById('expected_body').style.textAlign='left';
         }
     }
 }
