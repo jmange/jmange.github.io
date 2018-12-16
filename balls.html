@@ -6,72 +6,75 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <style type="text/css">
-        div#pen {
+        canvas#pit {
             border: 1px dotted gray;
-            width: 500px;
-            height: 500px;
-            position: relative;
-        }
-        div.ball {
-            border-radius: 50%;
-            border: 1px solid black;
-            position: relative;
         }
     </style>
 </head>
 <body>
-    <div id="pen">
-    </div>
+	<canvas id="pit" width="500" height="500"></canvas>
     <script>
-        balls=[];
-        ballSize=20;
-        function makeBall(x, y, xVel, yVel) {
-            var ball=document.createElement('div');
-            ball.classList.add('ball');
-            ball.style.top=y;
-            ball.style.left=x;
-            ball.style.width=ballSize;
-            ball.style.height=ballSize;
-            ball.x=x;
-            ball.y=y;
-            $('#pen').append(ball);
+    	function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1) ) + min; }
 
-            ball.dx=xVel;
-            ball.dy=yVel;
-            balls.push(ball);
-            console.log(balls);
-        }
+    	let balls=[];
+	let canvas=document.getElementById('pit');
+	balls.push(new Ball(100, 100, 1, 2, 5, 'blue'));
+	let colors=['blue','red','green','orange'];
+	// throw in 15 random balls of each color
+	for(let i=0; i<colors.length; i++)
+		for(let j=0; j<15; j++)
+			balls.push(new Ball(randInt(100,200), randInt(100,200), randInt(-8,8), randInt(-8,8), randInt(5,25), colors[i]));
 
-        t=0;
-        function redraw() {
-            for(var i=0; i<balls.length; i++) {
-                balls[i].x+=balls[i].dx;
-                balls[i].y+=balls[i].dy;
-                
-                // check bounce
-                if(balls[i].x+ballSize >= $('#pen').width() || balls[i].x <= 0) {
-                    balls[i].dx*=-1;
-                    balls[i].x+=2*balls[i].dx;
-                }
-                if(balls[i].y+ballSize >= $('#pen').height() || balls[i].y <= 0) {
-                    balls[i].dy*=-1;
-                    balls[i].y+=2*balls[i].dy;
-                }
-                
-                balls[i].style.left=balls[i].x;
-                balls[i].style.top=balls[i].y;
-            }
-            t++;
-        }
+	setInterval('animate()', 20);
+    	function Ball(x, y, vx, vy, radius, color) {
+		this.x=x;
+		this.y=y;
+		this.vx=vx;
+		this.vy=vy;
+		this.radius=radius;
+		this.color=color;
+	}
+	function animate() {
+		// update all the positions
+		for(let i=0; i<balls.length; i++) {
+			balls[i].x+=balls[i].vx;
+			balls[i].y+=balls[i].vy;
+			
+			// hitting top
+			if(balls[i].y < balls[i].radius) {
+				balls[i].y=balls[i].radius;
+				balls[i].vy*=-1;
+			}
 
-        function randInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
+			// hitting bottom
+			if(balls[i].y+balls[i].radius > canvas.height) {
+				balls[i].y=canvas.height-balls[i].radius;
+				balls[i].vy*=-1;
+			}
 
-        for(var i=0; i<10; i++)
-            makeBall(randInt(0,$('#pen').width()-ballSize), randInt(0,$('#pen').height()-ballSize), randInt(1,5), randInt(1,5));
-        //makeBall(450,100,2,1);
+			// hitting left
+			if(balls[i].x < balls[i].radius) {
+				balls[i].x=balls[i].radius;
+				balls[i].vx*=-1;
+			}
 
-        setInterval(redraw, 20);
+			// hitting right
+			if(balls[i].x+balls[i].radius > canvas.width) {
+				balls[i].x=canvas.width-balls[i].radius;
+				balls[i].vx*=-1;
+			}
+		}
+
+		// re-draw everything
+		let context=canvas.getContext('2d');
+		context.clearRect(0,0,canvas.width, canvas.height);
+		for(let i=0; i<balls.length; i++) {
+			context.beginPath();
+			context.arc(balls[i].x, balls[i].y, balls[i].radius, 0, 2*Math.PI, false);
+			context.fillStyle=balls[i].color;
+			context.fill();
+		}
+	}
     </script>
 </body>
+</html>
