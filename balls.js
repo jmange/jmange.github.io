@@ -15,7 +15,7 @@ function randColor() {
 }
 
 function randomBall(color) {
-	let b=new Ball(100, 100, randInt(-8,8), randInt(-8,8), randInt(5,25), color);
+	let b=new Ball(100, 100, randInt(-5,5), randInt(-5,5), randInt(5,25), color);
 	
 	balls.push(b);
 }
