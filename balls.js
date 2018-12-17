@@ -16,7 +16,10 @@ function randColor() {
 
 function randomBall(color) {
 	let b=new Ball(100, 100, randInt(-5,5), randInt(-5,5), randInt(5,25), color);
-	
+	while(b.vx==0)
+		b.vx=randInt(-5,5);
+	while(b.vy==0)
+		b.vy=randInt(-5,5);
 	balls.push(b);
 }
 
@@ -33,6 +36,10 @@ function addBlueBall() {
 }
 function addGreenBall() {
 	randomBall('green');
+}
+
+function clearBallPit() {
+	balls=[];
 }
 
 let balls=[];
