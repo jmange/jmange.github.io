@@ -83,6 +83,13 @@
 					for(var i=0; i<3; i++)
 						makeBlue(i,i,'expected');
 				}
+			},
+			{
+				instructions: 'An array named <span class="code">colors</span> has been defined.  Using a loop, step through this array and print out each element, one per line.',
+				expected_output: 'red<br>orange<br>yellow<br>green<br>blue<br>purple',
+				output_mode: 'text',
+				solution: 'for(var i = 0; i < colors.length; i++) {\n	console.log(colors[i]); \n}',
+				check_function: checkMatch
 			}
 		];
 
@@ -152,7 +159,10 @@
 			</div>	
 			<div id="expected_body" class="body">
 				What you should see
-			</div>		
+			</div>
+			<div id="blocker">
+				Expected output not shown for this problem
+			</div>			
 		</div>
 	</div>
 

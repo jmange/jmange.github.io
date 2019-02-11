@@ -108,6 +108,13 @@ function loadProblem(num) {
             document.getElementById('expected_body').style.textAlign='center';
         }
     }
+	
+	// hack for problem 9 to block things
+	if(num==8) {
+		document.getElementById('blocker').style.display='block';
+	} else {
+		document.getElementById('blocker').style.display='none';
+	}
 }
 
 function displaySolution(){
@@ -118,3 +125,5 @@ function displaySolution(){
     }
     editor.session.insert(customPosition, problem.solution);
 }
+
+colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple'];

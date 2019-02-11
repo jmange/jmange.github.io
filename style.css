@@ -70,12 +70,26 @@ div#output_outer {
 }
 div#expected_outer {
     width: 223px;
+	height: 440px;
     float: left;
     margin-left: 5px;
 }
 div#code_body, div#output_body, div#expected_body {
     height: 400px;
     font-family: monospace;
+}
+
+div#blocker {
+	position: relative;
+	height: 399px;
+	top: -400px; 
+	background-color: #ccc; 
+	border-radius: 0 0 8px 8px; 
+	padding: 10px; 
+	margin: 1px;
+	font-size: 16pt; 
+	font-weight: bold;
+	display: none;
 }
 
 div#image_holder {
