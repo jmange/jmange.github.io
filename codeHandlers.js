@@ -126,4 +126,7 @@ function displaySolution(){
     editor.session.insert(customPosition, problem.solution);
 }
 
-colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+preColors=['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+colors=[];
+for(let i=0; i<preColors.length; i++)
+	colors.push('<span style="font-weight: bold; color: '+preColors[i]+'">'+preColors[i]+'</span>');
