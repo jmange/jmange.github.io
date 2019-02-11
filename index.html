@@ -86,7 +86,7 @@
 			},
 			{
 				instructions: 'An array named <span class="code">colors</span> has been defined.  Using a loop, step through this array and print out each element, one per line.<hr><span style="color: red; font-weight: bold">Note:</span> For this problem, the expected output has been disabled.  The idea of this is to force the student to use a specific method for solving the problem (in this case, a loop) rather than allowing him or her to print the expected results using a different approach.',
-				expected_output: 'red<br>orange<br>yellow<br>green<br>blue<br>purple',
+				expected_output: colors.toString().replace(/,/g,'<br>'),
 				output_mode: 'text',
 				solution: 'for(var i = 0; i < colors.length; i++) {\n	console.log(colors[i]); \n}',
 				check_function: checkMatch
