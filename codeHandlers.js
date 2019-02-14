@@ -110,7 +110,7 @@ function loadProblem(num) {
     }
 	
 	// hack for problem 9 to block things
-	if(num==8) {
+	if(num==8 || num==9) {
 		document.getElementById('blocker').style.display='block';
 	} else {
 		document.getElementById('blocker').style.display='none';
