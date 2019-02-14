@@ -17,7 +17,6 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="codeHandlers.js" type="text/javascript" charset="utf-8"></script>
-	<script src="balls.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		problems=[
 			{
@@ -91,30 +90,6 @@
 				output_mode: 'text',
 				solution: 'for(var i = 0; i < colors.length; i++) {\n	console.log(colors[i]); \n}',
 				check_function: checkMatch
-			},
-			{
-				instructions: 'The following functions are available to add balls to the ball pit:<br><span class="code">addBlueBall()</span><br><span class="code">addRedBall()</span><br><span class="code">addGreenBall()</span><br><span class="code">addRandomColorBall()</span><br><span class="code">clearBallPit()</span><br><br>Using these functions, add at least 5 balls of each type to the ball pit.',
-				expected_output: '(a bunch of balls)',
-				output_mode: 'balls',
-				output: '<canvas id="pit" width="100%" height="100%"></canvas>',
-				check_function: function(){
-					let types=[0,0,0,0];
-					for(let i=0; i<balls.length; i++)
-						if(balls[i].color=='blue')
-							types[0]++;
-						else if(balls[i].color=='red')
-							types[1]++;
-						else if(balls[i].color=='green')
-							types[2]++;
-						else 
-							types[3]++;
-					console.log(types);
-					for(let i=0; i<4; i++)
-						if(types[i]<5)
-							return false;
-					return true;
-				},
-				solution: 'for(var i=0; i<5; i++) {\n   addRedBall();\n   addBlueBall();\n   addGreenBall();\n   addRandomColorBall();\n}'
 			}
 		];
 
