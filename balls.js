@@ -2,6 +2,7 @@ function initCanvas() {
 	let canvas=document.getElementById('pit');
 	canvas.width=document.getElementById('output_body').offsetWidth-2;
 	canvas.height=document.getElementById('output_body').offsetHeight-2;
+	balls=[];
 }
 
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1) ) + min; }
