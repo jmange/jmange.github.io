@@ -54,11 +54,7 @@ function Ball(x, y, vx, vy, radius, color) {
 	this.color=color;
 }
 function animate() {
-	try {
-		let canvas=document.getElementById('pit');
-	} catch(err) {
-		return;
-	}
+	let canvas=document.getElementById('pit');
 
 	// update all the positions
 	for(let i=0; i<balls.length; i++) {
@@ -91,7 +87,12 @@ function animate() {
 	}
 
 	// re-draw everything
-	let context=canvas.getContext('2d');
+	try {
+		var context=canvas.getContext('2d');
+	} catch(err) {
+		return;
+	}
+	
 	context.clearRect(0,0,canvas.width, canvas.height);
 	for(let i=0; i<balls.length; i++) {
 		context.beginPath();
