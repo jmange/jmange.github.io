@@ -55,6 +55,8 @@ function Ball(x, y, vx, vy, radius, color) {
 }
 function animate() {
 	let canvas=document.getElementById('pit');
+	if(canvas==null)
+		return;
 
 	// update all the positions
 	for(let i=0; i<balls.length; i++) {
