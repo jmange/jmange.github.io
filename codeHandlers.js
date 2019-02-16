@@ -19,6 +19,8 @@ function checkGrid() {
 function run() {
     if(outputMode=='text')
         document.getElementById('output_body').innerHTML='';
+    else if(outputMode=='grid')
+	document.getElementById('output_body').innerHTML=makeBlankGrid(3);
     eval(editor.getValue());
 
     if(check_function()) {
