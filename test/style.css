@@ -1,0 +1,182 @@
+table#table_3 td {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+}
+
+table#table_5 td {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+}
+
+
+div.box {
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    background-color: white;
+    position: absolute;
+    margin: 0 auto;
+}
+
+div.circle {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    background-color: white;
+    position: absolute;
+}
+
+span.code {
+    font-family: monospace;
+    background-color: #eee;
+    padding: 2px;
+}
+
+body {
+    font-family: Arial;
+    font-size: 12pt;
+    padding: 10px;
+    width: 1300px;
+}
+div {
+    border: 0px solid black;
+}
+div.outer {
+    border: 1px dotted gray;
+    border-radius: 8px;
+    position: relative;
+}
+div.title {
+    padding: 5px;
+    background-color: #004;
+    color: white;
+    font-weight: bold;
+    font-size: 14pt;
+    border-radius: 8px 8px 0 0;
+}
+div.body {
+    padding: 5px;
+    border-radius: 0 0 8px 8px;
+}
+
+div#instructions_outer {
+    width: 1066px;
+    margin-bottom: 10px;
+}
+div#code_outer {
+    width: 550px;
+    float: left;
+}
+div#output_outer {
+    width: 223px;
+    float: left;
+    margin-left: 5px;
+}
+div#expected_outer {
+    width: 223px;
+    height: 440px;
+    float: left;
+    margin-left: 5px;
+}
+div#code_body, div#output_body, div#expected_body {
+    height: 400px;
+    font-family: monospace;
+}
+
+div#blocker {
+	position: relative;
+	height: 399px;
+	top: -400px; 
+	background-color: #ccc; 
+	border-radius: 0 0 8px 8px; 
+	padding: 10px; 
+	margin: 1px;
+	font-size: 16pt; 
+	font-weight: bold;
+	display: none;
+}
+
+div#image_holder {
+    float: left;
+    padding: 200px 2px 0 5px;
+}
+
+button#solution{
+    position: absolute; 
+    bottom: 15px; 
+    right: 110px;
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 3px 15px 3px 15px;
+}
+
+button#run {
+    position: absolute; 
+    bottom: 15px; 
+    right: 15px;
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 3px 15px 3px 15px;
+}
+
+nav#prob_nav{
+    float: left;
+    padding: 10px 5px 0 5px;
+}
+
+nav#prob_nav_col{
+    position: right;
+}
+
+span.error {
+    color: red;
+}
+
+div.square{
+    margin: auto;
+    height: 50px;
+    width: 50px;
+    background-color: aqua;
+}
+
+div.oval{
+    margin: auto;
+    height: 50px;
+    width: 75px;
+    background-color: teal;
+    border-radius: 50%;
+}
+
+div.triangle{
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid navy;
+}
+
+div.trapezoid{
+    margin: auto;
+    border-bottom: 50px solid purple;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 75px;
+}
+
+div.parallelogram{
+    margin: auto;
+    width: 70px;
+    height: 50px;
+    transform: skew(-20deg);
+    background: gray;
+}
+
+.modal-xl {
+   width: 90%;
+   max-width:1200px;
+}

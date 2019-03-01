@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Science Olympiad - Learn Coding!  As a Ninja!</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+	<script src="../ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="fingerprint.js" type="text/javascript" charset="utf-8"></script>
+        <script src="codeHandlers.js" type="text/javascript" charset="utf-8"></script>
+        <script src="balls.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		problems=[
+			{
+				instructions: 'Output the statement “Code Ninjas Rule!” as shown in the example output. (4 points and 1 style point)',
+				expected_output: 'Code Ninjas Rule!',
+				output_mode: 'text',
+				check_function: checkMatch,
+				solution: 'console.log("Code Ninjas Rule!");',
+				points: 4
+			},
+			{
+				instructions: 'Output the statement “Code Ninjas Rule!” ten times on separate lines but add the number to the beginning of the output statement with a space as shown in the example output. (5 points and 3 style points)',
+				expected_output:'1 Code Ninjas Rule!<br>2 Code Ninjas Rule!<br>3 Code Ninjas Rule!<br>4 Code Ninjas Rule!<br>5 Code Ninjas Rule!<br>6 Code Ninjas Rule!<br>7 Code Ninjas Rule!<br>8 Code Ninjas Rule!<br>9 Code Ninjas Rule!<br>10 Code Ninjas Rule!',
+				output_mode: 'text',
+				check_function: checkMatch,
+				solution: 'for(var i = 1; i < 11; i++) {\n	console.log(i+" Code Ninjas Rule!");\n}',
+				points: 5
+			},
+			{
+				instructions: 'Output the numbers in the following sequence with one number on each line: 2, 6, 10, 14, 18, 22, 26, 30. Using a loop will result in more style points. (6 points and 3 style points)',
+				expected_output:'2<br>6<br>10<br>14<br>18<br>22<br>26<br>30',
+				output_mode: 'text',
+				check_function: checkMatch,
+				solution: 'for(var i = 2; i < 31; i+=4) {\n	console.log(i);\n}',
+				points: 6
+			},
+			{
+				instructions: 'An array named <span class="code">shapes</span> has been defined.  Output all the elements of the array named <span class="code">shapes</span> on separate lines.  No expected output is shown for this problem. (6 points and 3 style points)',
+				expected_output: shapes.toString().replace(/,/g,'<br>'),
+				output_mode: 'text',
+				solution: 'for(var i = 0; i < shapes.length; i++) {\n	console.log(shapes[i]); \n}',
+				check_function: checkMatch,
+				points: 6
+			},
+			{
+				instructions: 'The function <span class="code">isSpecial(x)</span> will return true if the number x is special and false if the number x is not. Print the numbers 1 through 10 on separate lines but also print a space and the word “special” after the number if the number is special. No expected output is shown for this problem. (8 points and 5 style points)',
+				expected_output: '1<br>2<br>3 special<br>4 special<br>5<br>6 special<br>7 special<br>8<br>9 special<br>10',
+				output_mode:'text',
+				check_function: checkMatch,
+				solution: 'for(var i=1; i<11; i++) {\n  if(isSpecial(i)) {\n    console.log(i+" special");\n  }\n  else {\n     console.log(i);\n  }\n}',
+				points: 8
+			},
+			{
+				instructions: 'The function <span class="code">makeBlue(r,c)</span> will change the color of the box  to blue at the position with row r and column c. The function <span class="code">makeRed(r,c)</span> will change the color of the box to red at the position with row r and column c. Using this information, make changes to the boxes to make it match the expected output. (8 points and 5 style points)',
+				expected_output: makeBlankGrid(5, 'expected'),
+				output: makeBlankGrid(5),
+				output_mode: 'grid',
+				solution: 'for(var i = 0; i < 5; i++) {\n	makeBlue(i, i); \n    makeRed(2,i); \n}',
+				check_function: checkGrid,
+				setup_function: function() { 
+					for(var i=0; i<5; i++){
+						makeBlue(i,i,'expected');
+						makeRed(2,i,'expected');
+					}
+				},
+				points: 8
+			},
+			{
+				instructions: 'A string called <span class="code">mysteryString</span> has been defined. Print out the positions (0-based) on separate lines of all occurances of the letter <span class="code">A</span> in the string, either upper-case or lower-case.<br>For example, if the string were <span class="code">Anna</span>, your code should print out <span class="code">0</span> followed by <span class="code">3</span> on separate lines. (10 points and 5 style points)',
+				expected_output: '0<br>1<br>5<br>15',
+				output_mode:'text',
+				check_function: checkMatch,
+				solution: 'for(var i=0; i<mysteryString.length; i++) {\n    if(mysteryString[i]==\'a\' || mysteryString[i]==\'A\') \n console.log(i); \n }',
+				points: 10
+			},
+			{
+				instructions: 'A function <span class="code">removeBall(\'color\')</span> has been defined to remove a ball of the color specified. The function <span class="code">ballExists(\'color\')</span> returns true if there are balls of that color and false if there are no balls of that color. Using these functions, remove all of the green balls to match the expected output. (10 points and 5 style points)',
+				expected_output: '',
+				output_mode: 'balls',
+				output: '<canvas id="pit" width="100%" height="100%"></canvas>',
+				check_function: function(){
+					if(ballExists('green'))
+						return false;
+					return true;
+				},
+				solution: 'while(ballExists(\'green\')) {\n   removeBall(\'green\');\n}',
+                                setup_function: function() { 
+					clearBallPit();
+                                        for(var i=0; i<5; i++){
+                                                addRedBall();
+                                                addBlueBall();
+					}
+                                        for(var i=0; i<15; i++){
+						addGreenBall();
+                                        }
+                                        document.getElementById('expected_body').innerHTML='<canvas id="pit2" width="100%" height="100%"></canvas>';
+                                        mirrorExpected=true;
+				},
+				points: 10
+			},
+			{
+				instructions: 'The object <span class="code">ball</span> has <b>already</b> been defined as below with the properties color (string), movement (bool), and speed (number).<br> <span class="code">var ball={color:\'gray\', movement:false, speed: 0};</span><br>Change the properties of the <span class="code">ball</span> object so that the ball is blue, movement is enabled, and its speed is set to 3.<br>Note that you do not need to re-define the object, it has already been defined. (12 points and 3 style points)',
+				expected_output: '',
+                                output_mode: 'balls',
+                                output: '<canvas id="pit" width="100%" height="100%"></canvas>',
+				check_function: function() { return (ball.color=='blue' && ball.movement==true && ball.speed==3); },
+				solution: "ball.color='blue';\nball.movement=true;\nball.speed=3;",
+                                setup_function: function() { 
+                                        animateSingleBall=true; 
+                                        ball={speed: 0, move: false, color: 'gray'}; 
+                                        run(); 
+                                },
+				points: 12
+			},
+			{
+				instructions: 'Write a function called <span class="code">sum</span> that takes x and y as input and returns the value of the two numbers added together. (15 points and 3 style points)',
+				expected_output: '',
+				output_mode:'text',
+				check_function: function() { return false; },
+				solution: 'function sum(x,y) {\n    return x+y;\n}',
+				points: 15
+			}
+		];
+		future_and_past_problems=[
+			{
+				instructions: 'Output the statement “Code Ninjas Rule!” ten times on separate lines as shown in the example output. (5 points and 3 style points)',
+				expected_output:'Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!',
+				output_mode: 'text',
+				check_function: checkMatch,
+				solution: 'for(var i = 0; i < 10; i++) {\n	console.log("Code Ninjas Rule!");\n}'
+			},
+			{
+				instructions: 'Output the statement “Code Ninjas Rule!” ten times on separate lines but on the fifth time change the output to “Coding is fun!” as shown in the example output. (7 points and 3 style points)',
+				expected_output:'Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Coding is fun!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!<br>Code Ninjas Rule!',
+				output_mode: 'text',
+				check_function: checkMatch,
+				solution: 'for(var i = 0; i < 10; i++) {\n if(i == 4){\n	console.log("Coding is fun!"); \n }\n else {\n	console.log("Code Ninjas Rule!"); \n } \n}'
+			},
+			{
+				instructions: 'The function <span class="code">makeBoxBlue()</span> will change the color of the box. Using this information, change the box to the color blue.',
+				expected_output: '<div class="box" id="expected_box" style="background-color: #007bff"></div>',
+				output: '<div class="box" id="output_box"></div>',
+				output_mode: 'box',
+				check_function: function() {return document.getElementById('output_box').style.backgroundColor== document.getElementById('expected_box').style.backgroundColor},
+				solution: 'makeBoxBlue();'
+			},
+			{
+				instructions: 'The functions <span class="code">makeBoxBlue()</span>, <span class="code">makeBoxRed()</span>, <span class="code">makeBallBlue()</span>, and <span class="code">makeBallRed()</span> will change the colors of the box and ball. Using this information, change the box to the color red, and the ball to the color blue as shown in the example output.',
+				expected_output: '<div class="box" id="expected_box" style="background-color: #007bff"></div><div class="circle" id="expected_circle" style="background-color:red"></div>',
+				output: '<div class="box" id="output_box"></div><div class="circle" id="output_circle"></div>',
+				output_mode: 'box and circle',
+				check_function: function() {return (document.getElementById('output_box').style.backgroundColor==document.getElementById('expected_box').style.backgroundColor && document.getElementById('output_circle').style.backgroundColor==document.getElementById('expected_circle').style.backgroundColor);},
+				solution: 'makeBoxBlue();\nmakeBallRed();'
+			},
+			{
+				instructions: 'The function <span class="code">makeBlue(r,c)</span> will change the color of the box at the position with row r and column c. For example, <span class="code">makeBlue(0,0)</span> will change the top corner box because it is zero-based. Using this information, make all of the boxes on the diagonal blue (from top left to bottom right) as shown in the example output.',
+				expected_output: makeBlankGrid(3, 'expected'),
+				output: makeBlankGrid(3),
+				output_mode: 'grid',
+				solution: 'for(var i = 0; i < 3; i++) {\n	makeBlue(i, i); \n}',
+				check_function: checkGrid,
+				setup_function: function() { 
+					for(var i=0; i<3; i++)
+						makeBlue(i,i,'expected');
+				}
+			},
+			{
+				instructions: 'The function <span class="code">makeBlue(r,c)</span> will change the color of the box at the position with row r and column c. For example, <span class="code">makeBlue(0,0)</span> will change the top corner box because it is zero-based. Using this information, change the center box on the grid to the color blue as shown in the example output.',
+				expected_output: makeBlankGrid(3, 'expected'),
+				output: makeBlankGrid(3),
+				output_mode: 'grid',
+				solution: 'makeBlue(1,1);',
+				check_function: checkGrid,
+				setup_function: function() { makeBlue(1,1,'expected'); }
+			},
+			{
+				instructions: 'An array named <span class="code">colors</span> has been defined.  Using a loop, step through this array and print out each element, one per line.<hr><span style="color: red; font-weight: bold">Note:</span> For this problem, the expected output has been disabled.  The idea of this is to force the student to use a specific method for solving the problem (in this case, a loop) rather than allowing him or her to print the expected results using a different approach.',
+				expected_output: colors.toString().replace(/,/g,'<br>'),
+				output_mode: 'text',
+				solution: 'for(var i = 0; i < colors.length; i++) {\n	console.log(colors[i]); \n}',
+				check_function: checkMatch
+			},
+			{
+				instructions: 'The following functions are available to add balls to the ball pit:<br><span class="code">addBlueBall()</span><br><span class="code">addRedBall()</span><br><span class="code">addGreenBall()</span><br><span class="code">addRandomColorBall()</span><br><span class="code">clearBallPit()</span><br><br>Using these functions, add at least 5 balls of each type to the ball pit.',
+				expected_output: '(a bunch of balls)',
+				output_mode: 'balls',
+				output: '<canvas id="pit" width="100%" height="100%"></canvas>',
+				check_function: function(){
+					let types=[0,0,0,0];
+					for(let i=0; i<balls.length; i++)
+						if(balls[i].color=='blue')
+							types[0]++;
+						else if(balls[i].color=='red')
+							types[1]++;
+						else if(balls[i].color=='green')
+							types[2]++;
+						else 
+							types[3]++;
+					console.log(types);
+					for(let i=0; i<4; i++)
+						if(types[i]<5)
+							return false;
+					return true;
+				},
+				solution: 'for(var i=0; i<5; i++) {\n   addRedBall();\n   addBlueBall();\n   addGreenBall();\n   addRandomColorBall();\n}'
+			}
+		];
+
+
+	</script>
+</head>
+<body>
+	<div class="outer" style="float: left">
+	<nav style="float: left; width: 150px" id="nav_list" class="nav nav-pills flex-column">
+	</nav>
+	</div>
+
+	<div id="body_holder" style="float: left; padding-left: 10px">
+		<div id="instructions_outer" class="outer">
+			<div id="instructions_title" class="title">
+				Instructions
+			</div>	
+			<div id="instructions_body" class="body">
+				Here's how you do stuff!
+			</div>		
+		</div>
+		
+		<div id="code_outer" class="outer">
+			<div id="code_title" class="title">
+				Code
+			</div>	
+			<div id="code_body" class="body"></div>
+			<button id="solution" onclick="alert('NO!')" style="display: none;">Solution</button>
+			<button id="run" onclick="run()">Run!</button>
+		</div>
+		
+		<div id="output_outer" class="outer">
+			<div id="output_title" class="title">
+				Output
+			</div>	
+			<div id="output_body" class="body">
+				Output of your program
+			</div>		
+		</div>
+		
+		<div id="image_holder">
+			<img id="icon" src="images/placeholder.png" width="54" height="54">
+		</div>
+		
+		<div id="expected_outer" class="outer">
+			<div id="expected_title" class="title">
+				Expected Output
+			</div>	
+			<div id="expected_body" class="body">
+				What you should see
+			</div>
+                        <div id="blocker">
+				Expected output not shown for this problem
+			</div>	
+		</div>
+	</div>
+
+        <!-- Modal -->
+	<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="successModalLabel">Success! Your output matches!</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			If you want to continue working on the problem for more style points select "Still working!". If you want to submit the question and move on to the next problem select "Submit problem!". You will <b>only</b> get points once you select "Submit problem!". <br><br><b>WARNING:</b> You can not return to the problem once you select "Submit problem!"!!!
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Still working!</button>
+			<button type="button" class="btn btn-primary" onclick="submit()">Submit problem!</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade bd-example-modal-xl" id="beginTestModal" tabindex="-1" role="dialog" aria-labelledby="beginTestModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="BeginTestModalLabel">Begin Test</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<b>WAIT UNTIL YOU ARE TOLD TO BEGIN THE TEST</b>
+                        <div class="form-group">
+                                <label for="team-name" class="col-form-label">Team Number:</label>
+                                <input type="text" class="form-control" id="team-name" placeholder="Team Number">
+                        </div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" id="begin-button">Begin Test!</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script>	
+		ace.config.set("basePath", "ace/");
+		var editor = ace.edit("code_body");
+		editor.session.setMode("ace/mode/javascript");
+		editor.setOptions({fontSize: "12pt"});
+                
+                function logger(msg) {
+                        if(outputMode=='text') {
+                                if(document.getElementById('output_body').innerHTML=='')
+                                        document.getElementById('output_body').innerHTML+=msg;
+                                else
+                                        document.getElementById('output_body').innerHTML+='<br>'+msg;	
+                        }
+                }
+		
+                if(window.console) {
+                        var former = window.console.log;
+                        window.console.log = function(msg){
+                                former(msg);  //maintains existing logging via the console.
+                                logger(msg);
+                        }
+                } else {
+                        // IE doesn't instantiate window.console unless developer tools are open
+                        window.console={};
+                        window.console.log=logger;
+                }
+                
+                
+                window.print = function(msg) {
+                        // do nothing for print function
+                }
+
+		window.onerror = function(message) {
+			window.console.log('<span class="error">Parsing error in code; please double-check your code and run again.</span>');
+		}
+
+		window.addEventListener('keydown', function(event) { if(event.ctrlKey && event.keyCode==13) run(); }, false);
+		$(document).ready(function(){                
+                        loadProblem(0);
+                        $('#beginTestModal').modal('show');
+                        $("#beginTestModal").keyup(function(event){
+                            if(event.keyCode == 13){
+                                $("#begin-button").trigger("click");
+                            }
+                          });
+                        $('#beginTestModal').on('hidden.bs.modal', function () {
+                                if(document.getElementById('team-name').value=='')
+                                        $('#beginTestModal').modal('show');
+                                else
+                                        window.recordedTeamName=document.getElementById('team-name').value;
+                        });
+                        
+                        // load all the navs
+                        for(var i=0; i<problems.length; i++) {
+                                var ul=document.getElementById('nav_list');
+                                
+                                var a=document.createElement('a');
+                                ul.appendChild(a);
+                                a.classList.add('nav-link');
+                                if(i==0) {
+                                        a.classList.add('active');
+                                        a.classList.add('show');
+                                }
+                                a.setAttribute('id', 'problem'+i);
+                                a.setAttribute('data-toggle', 'pill');
+                                a.setAttribute('aria-selected', 'false');
+                                a.setAttribute('onclick', 'javascript:loadProblem('+i+')')
+                                a.innerHTML='Problem '+(i+1);
+                                a.href='#';
+                        }
+                 });
+	</script>
+</body>
+</html>

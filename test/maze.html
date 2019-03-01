@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Science Olympiad - Learn Coding!  As a Ninja!</title>
+    <meta charset="utf-8">
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 0 solid black;
+        }
+        td.down, td.sideStraight, td.topRight, td.topLeft, td.bottomLeft, td.bottomRight {
+            background-color: #ddd;
+        }
+        td.down {
+            border-width: 0 1px 0 1px;
+        }
+        td.sideStraight {
+            border-width: 1px 0 1px 0;
+        }
+        td.topRight {
+            border-width: 1px 1px 0 0;
+            border-radius: 0 20px 0 0;
+        }
+        td.topLeft {
+            border-width: 1px 0 0 1px;
+            border-radius: 20px 0 0 0;
+        }
+        td.bottomLeft {
+            border-width: 0 0 1px 1px;
+            border-radius: 0 0 0 20px;
+        }
+        td.bottomRight {
+            border-width: 0 1px 1px 0;
+            border-radius: 0 0 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="holder"></div>
+    <script>
+function makeTable(rows,cols) {
+    table=document.createElement('table');
+    table.border='0';
+    table.cellPadding=0;
+    table.cellSpacing=0;
+    for(let r=0; r<rows; r++) {
+        row=document.createElement('tr');
+        table.appendChild(row);
+        for(let c=0; c<cols; c++) {
+            td=document.createElement('td');
+            td.id=`cell_${r}_${c}`;
+            row.appendChild(td);
+        }
+            
+    }
+    return table;
+}
+
+function makeCellColor(cell, color) {
+    document.getElementById(`cell_${cell[0]}_${cell[1]}`).style.backgroundColor=color;
+}
+
+function addCellClass(cell,theClass) {
+    document.getElementById(`cell_${cell[0]}_${cell[1]}`).classList.add(theClass);
+}
+
+function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1) ) + min; }
+
+let rows=12, cols=6;
+document.getElementById('holder').appendChild(makeTable(rows,cols));
+
+cell=[0,Math.floor(cols/2)];
+addCellClass(cell, 'down');
+cell[0]++;
+
+dir='down';
+ways=['straight','right','left', 'right', 'left'];
+cellClass='down';
+while(cell[0]<rows-1) {
+    way=ways[randInt(0,ways.length-1)];
+    if(dir=='down') {
+        switch(way) {
+            case 'straight':
+                addCellClass(cell, 'down');
+                cell[0]++;
+                ways=[];
+                if(cell[1]>0)
+                    ways.push('left');
+                if(cell[1]<cols-1)
+                    ways.push('right');
+                break;
+            case 'right':
+                addCellClass(cell, 'bottomLeft');
+                cell[1]++;
+                dir='right';
+                ways=['right'];
+                if(cell[1]<cols-1) {
+                    ways.push('straight');
+                    ways.push('straight');
+                }
+                break;
+            case 'left':
+                addCellClass(cell, 'bottomRight');
+                cell[1]--;
+                dir='left';
+                ways=['left'];
+                if(cell[1]>0) {
+                    ways.push('straight');
+                    ways.push('straight');
+                }
+                break;
+        }   
+    } else if(dir=='left') {
+        if(way=='straight') {
+            addCellClass(cell, 'sideStraight');
+            cell[1]--;
+            if(cell[1]==0)
+                ways=['left'];
+        } else {
+            addCellClass(cell, 'topLeft');
+            cell[0]++;
+            dir='down';
+            ways=['straight','right','right'];
+            if(cell[1]>0) {
+                ways.push('left');
+                ways.push('left');
+            }
+        }
+    } else if(dir=='right') {
+        if(way=='straight') {
+            addCellClass(cell, 'sideStraight');
+            cell[1]++;
+            if(cell[1]==cols-1)
+                ways=['right'];
+        } else {
+            addCellClass(cell, 'topRight');
+            cell[0]++;
+            dir='down';
+            ways=['straight','left','left'];
+            if(cell[1]<cols-1) {
+                ways.push('right');
+                ways.push('right');
+            }
+        }
+    }
+}
+addCellClass(cell, 'down');
+
+    </script>
+</body></html>
