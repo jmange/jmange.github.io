@@ -86,7 +86,7 @@ function recordData(passed) {
             lastResponse = this.responseText;
        }
     };
-	xhttp.open("POST", "record.php", true);
+	xhttp.open("POST", "http://science-olympiad.com/test8/record.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	data=  "team="+recordedTeamName;
 	data+="&problem="+(problem_index+1);
